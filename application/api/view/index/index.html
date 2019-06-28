@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <link rel="stylesheet" type="text/css" href="/css/api/index.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/ui.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/jsonFormater/jsonFormater.css">
+    
+    <script src="/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/assets/js/jsonFormater/jsonFormater.js"></script>
+</head>
+
+<body>
+    <div class="title line">{$title}</div>
+    <table class="table">
+	    <tr>
+	    	<th>接口</th>
+	    	<td>
+	    		<select id="api">
+                </select>
+	    	</td>
+	    </tr>
+	    
+	    <tr>
+	    	<th>URL</th>
+	    	<td id="URL">
+	    	</td>
+	    </tr>
+        
+        <tr>
+            <th>登陆信息</th>
+            <td style="color:blue;">
+                {if $userid gt 0}
+                <span id="loginInfo">已登录用户ID: {$userid}</span>
+                {else /}
+                <span id="loginInfo">未登录</span>
+                {/if}
+            </td>
+        </tr>
+        
+        <tr>
+            <th>接口描述</th>
+            <td id="apiInfo">
+            </td>
+        </tr>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2" class="title">输入参数</td>
+            </tr>
+        </thead>
+        <tbody id="params">
+            <tr id="params_tpl">
+                <th></th>
+                <td class="paramTD">
+                    <input class="param" type="text" 
+                    value="" style="display: inline-block; width:180px;">
+                    <span class="info"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+    <div class="line left">
+        <button type="submit" id="submit" class="button blue">提交</button>
+    </div>
+    
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2" class="title">返回值描述</td>
+            </tr>
+        </thead>
+        <tbody id="returns">
+            <tr id="returns_tpl">
+                <th></th>
+                <td>
+                    <span class="info"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <td class="title">返回结果</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div id="returnData" style="min-height: 26px;font-size: 12px;">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script src="/js/api/page.index.js"></script>
+</body>
+
+</html>

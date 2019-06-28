@@ -1,0 +1,5 @@
+.idea
+runtime/
+public/uploads/
+public/tmp/
+public/*txt

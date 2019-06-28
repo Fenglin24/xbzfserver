@@ -1,0 +1,183 @@
+{include file="../application/admin/view/header.html"}
+<div class="searchContent">
+    <div class="col-xs-3">
+        <button class="btn btn-sm in">
+            全选
+        </button>
+        <button class="btn btn-sm out">
+            反选
+        </button>
+        <button class="btn btn-sm xxall">
+            下线
+        </button>
+        <button class="btn btn-sm deleteall">
+            删除
+        </button>
+    </div>
+    <div class="col-xs-9 text-left">
+        <form class="form-inline" method="GET" action="/">
+            <select class="form-control input-small" name="condition[city]" id="city">
+                <option value="">请选择城市</option>
+                {volist name="citys" id="row"}
+                    <option {$row.name==$condition.city?'selected':''} value="{$row.name}">{$row.name}</option>
+                {/volist}
+            </select>
+            <select data-name="{$condition.area|default=''}" class="form-control input-small" name="condition[area]" id="area">
+                <option value=''>请选择区域</option>
+            </select>
+            <input type="text" class="form-control input-small" name="condition[dsn]" placeholder="室友帖子编号" value="{$condition['dsn']|default=''}">
+            <input style="width: 100px;" type="text" class="form-control input-small"  name="condition[title]" placeholder="帖子标题" value="{$condition.title|default=''}">
+            <input style="width: 180px;" type="text" class="form-control input-small" name="condition[real_name]" placeholder="真实姓名" value="{$condition.real_name|default=''}">
+            <input style="width: 100px;" type="text" class="form-control input-small" name="condition[price]" placeholder="预算" value="{$condition.price|default=''}">
+            <input type="hidden" name="s" value="/admin/roommates/index">
+            <select class="form-control input-small" name="status">
+                <option {$condition.status == ''? 'selected':''} value="">所有</option>
+                <option {$condition.status == '0'? 'selected':''} value="0">未发布</option>
+                <option {$condition.status == '1'? 'selected':''} value="1">发布中</option>
+                <option {$condition.status == '2'? 'selected':''} value="2">下线</option>
+            </select>
+
+            <label style="margin-right: 10px;"><input  type="checkbox" name="condition[top]" value="是" {$condition.top == '是' ? 'checked':''}  />&nbsp;&nbsp;置顶 </label>
+            <button type="submit" class="btn btn-info btn-sm">搜索</button>
+        </form>
+    </div>
+</div>
+   
+<div class="tableContent col-xs-12">
+    <table id="mainTable" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>帖子编号</th>
+                <th>标题</th>
+                <th>城市</th>
+                <th>所属区域</th>
+                <th>预算$</th>
+                <th>姓名</th>
+                <th>微信号</th>
+                <th>手机号</th>
+                <th>电子邮箱</th>
+                <th>置顶</th>
+                <th>状态</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {volist name="pageList.list" id="row"}
+        <tr data-id="{$row.id}">
+            <td class="aid"><input type="checkbox" style="width: 20px;height: 20px;" name="id[]" value="{$row.id}"></td>
+            <td class="dsn">{$row.dsn|default=""}</td>
+            <td class="title">{$row.title|default=""}</td>
+            <td class="city">{$row.city|default=""}</td>
+            <td class="area">{$row.area|default=""}</td>
+            <td class="price">{$row.price|default=""}</td>
+            <td class="real_name">{$row.real_name|default=""}</td>
+            <td class="wchat">{$row.wchat|default=""}</td>
+            <td class="tel">{$row.tel|default=""}</td>
+            <td class="tel">{$row.email|default=""}</td>
+            <td class="top text-center"><a href="javascript:;">
+                {if condition="$row.top =='是'"}
+                <span style="color:blue;display: block;padding: 5px;background-color: #fff;">是</span>
+                {else /}
+                <span style="color:red;display: block;padding: 5px;background-color: #fff;">否</span>
+                {/if}
+            </a>
+            </td>
+
+            <td class="status">
+                {if condition="$row.status == '0'"}
+                <span style="color:red;">未发布</span>
+                {elseif condition="$row.status == '1'"}
+                <span style="color: blue;">发布中</span>
+                {elseif condition="$row.status == '2'"}
+                <span style="color:#bbb;">下线</span>
+                {/if}
+            </td>
+            <td class="cdate">{$row.cdate}</td>
+            <td class="op action-buttons">
+                {if condition="check_auth($role_id, $userAuthMap, '/admin/roommates/detail')"}
+                <a class="red" href="?s=/admin/roommates/detail&id={$row.id}&ps=/admin/roommates/index">
+                    {else /}
+                    <a title="没有权限" class="disabled" href="javascript:">
+                        {/if}
+                        <button>详情</button>
+                    </a>
+                    {if condition="check_auth($role_id, $userAuthMap, '/admin/roommates/xx')"}
+                    <a class="red xx" href="javascript:">
+                        {else /}
+                        <a title="没有权限" class="disabled" href="javascript:">
+                            {/if}
+                            <button>{$row.status==1?'下线':'上线'}</button>
+                        </a>
+                        {if condition="check_auth($role_id, $userAuthMap, '/admin/roommates/delete')"}
+                        <a class="red delete" href="javascript:">
+                            {else /}
+                            <a title="没有权限" class="disabled" href="javascript:">
+                                {/if}
+                                <button>删除</button>
+                            </a>
+
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+
+<div class="pageContent">
+    <div class="col-xs-12">
+        {$pageList.page}
+    </div>
+</div>
+<div id="dialog_tpl" style="display:none;">
+    <form class="form-horizontal" onsubmit="return false;" style="width:400px; margin:20px;">
+        <input type="password" name="password1" style="display:none" />
+        <div class="form-group">
+            <label for="username" class="col-sm-2">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" autocomplete="off" id="username" name="username" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username" class="col-sm-2">密码</label>
+            <div class="col-sm-10">
+                <input type="password" style="display:inline-block; width:200px;" class="form-control" autocomplete="off" id="password" name="password" placeholder="">（留空则不修改）
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nick" class="col-sm-2">昵称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" autocomplete="off" id="nick" name="nick" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tel" class="col-sm-2">电话</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" autocomplete="off" id="tel" name="tel" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2">Email</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" autocomplete="off" id="email" name="email" placeholder="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="role_id" class="col-sm-2">角色</label>
+            <div class="col-sm-10">
+                <select id="role_id" class="form-control">
+                    {volist name="roleMap" id="name"}
+                    <option value="{$key}">{$name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group center">
+            <input type="hidden" id="id" name="id" value="0">
+            <button type="submit" id="submit" class="btn btn-primary btn-noborder">提交</button>
+        </div>
+    </form>
+</div>
+<script src="{:stamp('js/admin/roommates.index.js')}" type="text/javascript"></script>
+{include file="../application/admin/view/footer.html"}

@@ -1,0 +1,31 @@
+{include file="../application/admin/view/header.html"}
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="error-container">
+                <div class="well" style="height: 500px;">
+                    <h1 class="grey lighter smaller center" style="height: 200px; line-height: 200px;">
+						<span class="gray bigger-125">
+							<i class="icon-lock"></i>
+						</span>
+						{$msg}
+					</h1>
+                    <div style="height:100px;"></div>
+                    <div class="center">
+                    	<hr>
+                        <a href="javascript:history.back()" class="btn btn-grey">
+                            <i class="icon-arrow-left"></i> 返回上一页
+                        </a>
+                        <a href="/admin" class="btn btn-primary">
+                            <i class="icon-dashboard"></i> 后台首页
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- PAGE CONTENT ENDS -->
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+{include file="../application/admin/view/footer.html"}

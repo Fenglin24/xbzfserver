@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @Author: Qian weidong
+ * @Date:   2018-12-12 13:10:10
+ * @Last Modified by:   Qian weidong
+ * @Last Modified time: 2018-12-29 11:55:04
+ */
+namespace app\api\model;
+
+class Roommates extends \app\common\model\Roommates {
+
+    public function get_page_roommates_list($condition) {
+        $pageSize = config('page');
+
+        // 为翻页按钮准备query参数
+        $pageParam['query']['s'] = '/api/questions/get_roommates_list';
+        foreach ($condition as $key => $value) {
+            $pageParam['query']["condition[{$key}]"] = $value;
+        }
+
+        $count = $this->where($condition)->count();
+        $list = $this->where($condition)->order('cdate desc')->paginate($pageSize, $count, $pageParam);
+        // foreach ($list as &$row) {
+        // 	$row['images'] = $this->_get_image_string_to_array($row['images']);
+        // }
+        file_put_contents("/tmp/__debug.log",__FUNCTION__." || ".$this->getLastSql()."\n\n",FILE_APPEND);
+        return $list;
+    }
+
+//	public function get_page_roommates_top_list($condition) {
+//		$list = $this->alias('r')->join('user u', 'r.user_id = u.id', 'left')->field('r.*,u.real_name,u.wchat,u.tel')->where($condition)->order('r.top_datetime desc')->limit(5)->select();
+//		return $list;
+//	}
+
+	public function _get_image_string_to_array($value) {
+		$arr = explode(',', $value);
+		return $arr;
+	}
+
+	public function get_page_search_list($condition, $order, $keyword) {
+		$pageSize = config('page');
+
+		// 为翻页按钮准备query参数
+		$pageParam['query']['s'] = '/api/questions/get_roommates_list';
+		foreach ($condition as $key => $value) {
+			$pageParam['query']["condition[{$key}]"] = $value;
+		}
+		// dd($condition['keyword']);
+		$c['r.title|r.price|r.sex|r.pet|r.smoke|r.lease_term|r.habit|r.city|r.content|r.school|r.area'] = ['like', "%{$keyword}%"];
+		$count = $this->alias('r')
+				// ->whereOr('h.title', 'like', "%{$keyword}%")
+				// ->whereOr('h.content', 'like', "%{$keyword}%")
+				// ->whereOr('h.school', 'like', "%{$keyword}%")
+				->where($c)
+				->join('user u', 'r.user_id = u.id', 'left')
+				->where($condition)
+				->count();
+//        var_dump($count);
+		file_put_contents('index.search.txt', $this->getLastSql());
+		// echo $this->getLastSql();exit;
+		$list = $this->alias('r')
+				->where($c)
+				// ->whereOr('h.title', 'like', "%{$keyword}%")
+				// ->whereOr('h.content', 'like', "%{$keyword}%")
+				// ->whereOr('h.school', 'like', "%{$keyword}%")
+				->join('user u', 'r.user_id = u.id', 'left')
+				->field('r.*,u.avaurl')
+				->where($condition)
+				->order($order)
+				->paginate($pageSize, $count, $pageParam);
+
+        file_put_contents("/tmp/__roommatedebug.log",__FUNCTION__." || ".$this->getLastSql()."\n\n",FILE_APPEND);
+//        var_dump($list);
+//        foreach ($list as &$row) {
+//			$row['images'] = $this->_get_image_string_to_array($row['images']);
+//		}
+		return $list;
+	}
+
+	public function get_roommates_detail_by_id($id) {
+		//$row = $this->alias('h')->join('user u', 'u.id=h.user_id', 'left')->field('h.*, u.real_name, u.tel, u.wchat')->where('h.id', $id)->find();
+        $row = $this->where('id', $id)->find();
+        // dd($id);
+		return $row;
+	}
+}

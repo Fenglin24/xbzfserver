@@ -1,0 +1,259 @@
+{include file="../application/admin/view/header.html"}
+<style type="text/css">
+	.rowTitle {
+		font-size: 16px;
+        color:#222;
+	}
+	.rowContent{
+		font-size: 16px;
+		position: relative;
+		/*top: 5px;*/
+        color:#222;
+	}
+    h3 {
+        margin-left: 50px;
+        margin-top:30px;
+        color:red;
+    }
+    .col-xs-12 {
+        margin-top: 5px;
+        border:1px solid #eee;
+    }
+    .col-xs-3 {
+        border-right: 1px dashed #ddd;
+    }
+</style>
+<div style="width: 800px;margin-left: 10%;">
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		房源名称：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.title|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12 ">
+    	<div class="col-xs-3 text-right rowTitle">
+    		租金：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.price|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		地址：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.address|default=''}
+    	</div>
+    </div>
+    <h3>租约相关</h3>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		房屋来源：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.source|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		出租方式：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.type|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		性别限制：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.sex|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		宠物：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.pet|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		吸烟：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.smoke|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		Bill：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.bill|default=''}
+    	</div>
+    </div>
+   
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		押金：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.deposit|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		可入住时间：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.live_date|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		租期：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.lease_term|default=''}
+    	</div>
+    </div>
+    <h3>房屋相关</h3>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		房屋类型：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.house_type|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		户型：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.house_room|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		家具：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.furniture|default=''}
+    	</div>
+    </div>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		车位：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.car|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		卫生间：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.toilet|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+        <div class="col-xs-3 text-right rowTitle">
+            设施：
+        </div>
+        <div class="col-xs-9 rowContent">
+            {$house.home|default=''}
+        </div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		交通：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.sation|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		区域：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.area|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		校区：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.school|default=''}
+    	</div>
+    </div>
+    <h3>联系方式</h3>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		姓名：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.real_name|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		电话：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.tel|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		微信号：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		{$house.wchat|default=''}
+    	</div>
+    </div>
+     <div class="col-xs-12">
+        <div class="col-xs-3 text-right rowTitle">
+            房源描述：
+        </div>
+        <div class="col-xs-9 rowContent">
+            {$house.content|default=''}
+        </div>
+    </div>
+    <h3>封面图</h3>
+    <div class="col-xs-12">
+    	<div class="col-xs-3 text-right rowTitle">
+    		封面图：
+    	</div>
+    	<div class="col-xs-9 rowContent">
+    		<img style="width: 200px;height: 150px;" src="{$house.thumnail|default=''}">
+    	</div>
+    </div>
+    <h3>详情图</h3>
+    <div class="col-xs-12 rowContent">
+    	<div class="col-xs-3 text-right rowTitle">
+    		详情图：
+    	</div>
+    	<div class="col-xs-9">
+            {volist name="$house.images" id="row"}
+                {if condition="$key%3 == 0"}
+                    <br/>
+                {/if}
+                <img style="width: 33%;height: 150px;float: left;" src="{$row}">
+
+            {/volist}
+    	</div>
+    </div>
+    <div style="width: 100%;height: 150px;">
+    	
+    </div>
+</div>
+{include file="../application/admin/view/footer.html"}

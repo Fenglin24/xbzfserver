@@ -1,0 +1,17 @@
+.searchContent {
+    padding-bottom: 5px;
+    min-height: 39px;
+}
+
+.tableContent {
+    margin-bottom: 5px;
+}
+
+.pageContent .pagination {
+    margin: 0;
+}
+
+.disabled {
+    color: gray;
+    opacity: 0.5 !important;
+}

@@ -1,0 +1,133 @@
+<?php
+namespace app\admin\controller;
+
+class Roommates extends AdminController {
+    public function _initialize() {
+        parent::_initialize();
+        error_reporting(E_ALL ^ E_NOTICE);
+        $this->view->breadcrumb = array(
+            array('name' => '找室友管理'),
+        );
+    }
+    public function index() {
+        $this->view->title = '找室友帖子列表';
+        $condition = $this->_get_search_condition();
+        if (@$_GET['status'] == '') {
+
+        } else {
+            $condition['status'] = $_GET['status'];
+        }
+//		 dd($condition);
+        // $condition['status'] = 0;
+        $this->view->pageList = model('Roommates')->getPageList($condition);
+        $this->view->roleMap = model('Role')->get_role_map();
+        if (@$_GET['status'] == '') {
+            $condition['status'] = '';
+        }
+        if (!@$condition['city']) {
+            $condition['city'] = '';
+        }
+        $this->view->condition = $condition;
+        $this->view->citys = model('cate')->where('pid', 0)->order('id ASC')->select();
+        return $this->fetch();
+    }
+
+    public function detail() {
+        $this->view->title = '找室友帖子详情';
+        $id = input('param.id');
+        $house = model('Roommates')->where('id', $id)->find();
+        if (@$house['images']) {
+            $house['images'] = explode(',', $house['images']);
+        }
+        // dd($house);
+        $this->view->house = $house;
+
+        return $this->fetch();
+    }
+
+    public function update() {
+        return $this->_save();
+    }
+
+    private function _save() {
+        $data = input('post.');
+        $res = model('Roommates')->saveHousesData($data);
+        return $res;
+    }
+
+    public function delete() {
+        $id = input('param.id', 0, 'intval');
+        $res = model('Roommates')->deleteHousesData($id);
+        return $res;
+    }
+
+    public function deleteAll() {
+        $id = input('param.id');
+        $id = explode(',', $id);
+        $condition['id'] = ['in', $id];
+        $res = model('Roommates')->where($condition)->delete();
+        if ($res === false) {
+            return ['code' => -1, 'msg' => '删除失败'];
+        }
+        return ['code' => 0, 'msg' => '删除成功'];
+    }
+
+    public function xxAll() {
+        $id = input('param.id');
+        $id = explode(',', $id);
+        $condition['id'] = ['in', $id];
+        $res = model('Roommates')->where($condition)->update(['status' => 2]);
+        if ($res === false) {
+            return ['code' => -1, 'msg' => '设置失败'];
+        }
+        return ['code' => 0, 'msg' => '已下线'];
+    }
+
+    public function xx() {
+        $id = input('param.id', 0, 'intval');
+        $status = input('param.status');
+        if ($status == 2) {
+            $msg = '已下线';
+        } else {
+            $msg = '已上线';
+        }
+        $res = model('Roommates')->where('id', $id)->update(['status' => $status]);
+        if ($res === false) {
+            return ['code' => -1, 'msg' => '设置失败'];
+        }
+        return ['code' => 0, 'msg' => $msg];
+    }
+
+    public function update_tag() {
+        $data = input('param.');
+        if ($data['value'] == '是') {
+            $data['value'] = '否';
+        } else {
+            $data['value'] = '是';
+        }
+
+        $condition = [$data['key'] => $data['value']];
+        if (@$data['key'] == 'top') {
+            $condition['top_datetime'] = date('Y-m-d H:i:s');
+        }
+        // dd($condition);
+        $res = model('Roommates')->where('id', $data['id'])->update($condition);
+        if ($res === false) {
+            return ['code' => -1, 'msg' => '设置失败'];
+        }
+        return ['code' => 0, 'msg' => '设置成功'];
+    }
+
+    public function update_top($data) {
+        if (@$data['key' == 'top']) {
+            $condition = [$data['key'] => $data['value']];
+            $condition['top_datetime'] = date('Y-m-d H:i:s');
+            $res = model('Roommates')->where('id', $data['id'])->update($condition);
+            if ($res === false) {
+                return ['code' => -1, 'msg' => '设置失败'];
+            }
+            return ['code' => 0, 'msg' => '设置成功'];
+        }
+    }
+
+}

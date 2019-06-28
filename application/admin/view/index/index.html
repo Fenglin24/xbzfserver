@@ -1,0 +1,237 @@
+﻿{include file="../application/admin/view/header.html"}
+<script src="/static/js/echarts.min.js" type="text/javascript"></script>
+<div class="col-xs-12">
+    <style>
+    .container {
+        margin-top: 50px;
+        margin-left: 50px;
+
+    }
+
+    .box {
+        float: left;
+        width: 30%;
+        height: 160px;
+        margin: 0 1.5% 1.5% 0;
+        border-radius: 5px;
+        color: #fff;
+
+    }
+
+    h4 {
+        margin: 0;
+        padding: 20px 0 0 20px;
+        font-weight: normal;
+        font-size: 16px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 55px;
+        line-height: 85px;
+
+    }
+
+    h3 {
+        margin: 0;
+        height: 40px;
+        font-size: 16px;
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    .SMbox {
+        overflow: hidden;
+    }
+
+    .Sbox,
+    .Mbox {
+        margin-bottom: 20px;
+    }
+
+    .Sbox .box-left {
+        background-color: #e27000;
+    }
+
+    .Sbox .box-center {
+        background-color: #dc3545;
+    }
+
+    .Sbox .box-right {
+        background-color: #17a2b8;
+    }
+
+    .Mbox .box-left {
+        background-color: #ffc107;
+    }
+
+    .Mbox .box-center {
+        background-color: #006ae2;
+    }
+
+    .Mbox .box-right {
+        background-color: #28a745;
+    }
+
+    .Xbox {
+        overflow: hidden;
+    }
+
+    .Xbox-left {
+        width: 25%;
+        height: 400px;
+        float: left;
+        margin-right: 1.5%;
+
+    }
+
+    .Xbox-right {
+        width: 63.5%;
+        height: 400px;
+        float: left;
+
+    }
+
+    .box1 {
+        width: 100%;
+        height: 360px;
+        background-color: #b2c6e6;
+        border-radius: 5px;
+    }
+
+    .box2 {
+        width: 100%;
+        height: 360px;
+        background-color: #b2c6e6;
+        border-radius: 5px;
+    }
+    </style>
+    <div class="container">
+        <div class="SMbox">
+            <div class="Sbox">
+                <div class="box box-left">
+                    <h4>房源统计</h4>
+                    <p>{$house_count|default='0'}</p>
+                </div>
+                <div class="box box-center">
+                    <h4>用户统计</h4>
+                    <p>{$user_count|default='0'}</p>
+                </div>
+                <div class="box box-right">
+                    <h4>房源收藏</h4>
+                    <p>{$collection['num']|default='0'}</p>
+                </div>
+            </div>
+            <div class="Mbox">
+                <div class="box box-left">
+                    <h4>今日新增房源</h4>
+                    <p>{$day_house_count|default='0'}</p>
+                </div>
+                <div class="box box-center">
+                    <h4>房东统计</h4>
+                    <p>{$user_house_count|default='0'}</p>
+                </div>
+                <div class="box box-right">
+                    <h4>锦囊收藏</h4>
+                    <p>{$news_count.num|default='0'}</p>
+                </div>
+            </div>
+        </div>
+        <div class="Xbox" style="margin-top: 60px;">
+            <div class="Xbox-left">
+                <h3 class="hidden">用户性别</h3>
+                <div class="box1" id="circle"></div>
+            </div>
+            <div class="Xbox-right">
+                <h3 class="hidden">每日新增房源走势</h3>
+                <div class="box2" id="line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="../application/admin/view/footer.html"}
+
+<script type="text/javascript">
+    // var data = [{
+    //         value: $('#' + prefix + '-pancake').data(prefix + '-pc'),
+    //         name: 'pc端'
+    //     }, {
+    //         value: $('#' + prefix + '-pancake').data(prefix + '-wap'),
+    //         name: '移动端'
+    //     }];
+    //             self.getEchartPancake('guest-count-pancake', '访客数统计', '访客数', guest_count_data);
+    var data = '{$circle|default=""}';
+    data = eval('('+data+')');
+    getEchartPancake('circle', data);
+    function getEchartPancake(chartId, data) {
+        var echartsA = echarts.init(document.getElementById(chartId));
+        option = {
+            title : {
+                text: '房源分布图',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            series : [
+                {
+                    name: '房源数量',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        echartsA.setOption(option);
+    }
+
+    var arr = '{$arr|default=""}';
+    var count = '{$count|default=""}';
+     arr = eval('('+arr+')');
+     count = eval('('+count+')');
+    init_zhe_line('line', arr, count);
+
+    function init_zhe_line(chartId, day, data) {
+        var echartsA = echarts.init(document.getElementById(chartId));
+        option = {
+            title : {
+                text: '每日新增房源走势',
+                x:'center'
+            },
+            xAxis: {
+                type: 'category',
+                data: day,
+                axisLabel: {
+                   interval:0,
+                   rotate:40
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                symbolSize: 11,   //设定实心点的大小
+                data: data,
+                type: 'line',
+                 itemStyle : { normal: {label : {show: true}}}
+            }]
+        };
+
+        echartsA.setOption(option);
+    }
+
+</script>

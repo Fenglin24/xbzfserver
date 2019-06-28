@@ -1,0 +1,27 @@
+{
+    "code": 0,
+    "msg": "ok",
+    "data": {
+        "id": "1",
+        "name": "普通管理员",
+        "authority": {
+            "Admin": {
+                "pid": "",
+                "value": "1",
+                "child": {
+                    "role": {
+                        "pid": "Admin",
+                        "value": "1"
+                    }
+                }
+            },
+            "News": {
+                "pid": "",
+                "value": "2"
+            }
+        }
+    }
+}
+
+说明，权限第一级是Controller的名字，value可以为2代表所有action都有权限，如果为1，则部分有权限，为0，则没有权限，当然如果为0，就不应该出现这个Controller。
+child中则是action的名字，value只能为1或0.
