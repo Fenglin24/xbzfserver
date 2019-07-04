@@ -32,11 +32,11 @@ class Email {
 		$mail->SMTPSecure = 'tls'; // 使用安全协议
 		$mail->Host = "smtp.gmail.com"; // SMTP 服务器
 		$mail->Port = 587; // SMTP服务器的端口号
-		$mail->Username = "royli.lihuanan@gmail.com"; // SMTP服务器用户名
-		$mail->Password = "Liuzhuohan123"; // SMTP服务器密码
-		$mail->SetFrom('royli.lihuanan@gmail.com', '一站式表单测试');
-		$replyEmail = 'royli.lihuanan@gmail.com'; //留空则为发件人EMAIL
-		$replyName = 'roy'; //回复名称（留空则为发件人名称）
+		$mail->Username = "onepointmain123@gmail.com"; // SMTP服务器用户名
+		$mail->Password = "lu6268lu"; // SMTP服务器密码
+		$mail->SetFrom('onepointmain123@gmail.com', '一站式表单');
+		$replyEmail = 'onepointmain123@gmail.com'; //留空则为发件人EMAIL
+		$replyName = ''; //回复名称（留空则为发件人名称）
 		$mail->AddReplyTo($replyEmail, $replyName);
 		$mail->Subject = $subject;
 		$mail->MsgHTML($body);

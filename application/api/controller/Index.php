@@ -60,18 +60,85 @@ class Index extends \think\Controller {
 	}
     public function getForms() {
         $data = input('param.');
-//        if (@$data['name']) {
-//            $data['status_code'] = 200;
-//            return json_encode($data);
-//        }
-
-//        print_r($data['form']);
-//        $someArray = json_decode($data['form'], true);
-//        print_r($data['form']);
-//        echo $someArray[0]["name"];
+        $message = "
+        <html>
+        <head>
+        <title>". $data['form']['name'] . "的一站式调查问卷</title>
+        </head>
+        <body>
+        <table>
+        <tr>
+        <th>姓名</th>
+        <th>". $data['form']['name'] . "</th>
+        </tr>
+        <tr>
+        <th>性别</th>
+        <th>". $data['form']['sex'] . "</th>
+        </tr>
+        <tr>
+        <th>微信ID</th>
+        <th>". $data['form']['wxid'] . "</th>
+        </tr>
+        <tr>
+        <th>微信昵称</th>
+        <th>". $data['form']['wxnickname'] . "</th>
+        </tr>
+        <tr>
+        <th>电话</th>
+        <th>". $data['form']['tel'] . "</th>
+        </tr>
+        <tr>
+        <th>是否下签？</th>
+        <th>". $data['form']['ifOffer'] . "</th>
+        </tr>
+        <tr>
+        <th>签证日期是否超过12个月</th>
+        <th>". $data['form']['is12'] . "</th>
+        </tr>
+        <tr>
+        <th>申请人数</th>
+        <th>". $data['form']['amount'] . "</th>
+        </tr>
+        <tr>
+        <th>携带宠物？</th>
+        <th>". $data['form']['ispet'] . "</th>
+        </tr>
+        <tr>
+        <th>入住时间</th>
+        <th>". $data['form']['date'] . "</th>
+        </tr>
+        <tr>
+        <th>预算</th>
+        <th>". $data['form']['budget'] . "</th>
+        </tr>
+        <tr>
+        <th>房源类型</th>
+        <th>". implode("|", $data['form']['type']) . "</th>
+        </tr>
+        <tr>
+        <th>租期</th>
+        <th>". $data['form']['length'] ."</th>
+        </tr>
+        <tr>
+        <th>户型</th>
+        <th>". implode("|", $data['form']['housetype']) ."</th>
+        </tr>
+        <tr>
+        <th>对房屋其他要求</th>
+        <th>". implode("|",$data['form']['requirements']) . "</th>
+        </tr>
+        <tr>
+        <th>了解渠道</th>
+        <th>". implode("|", $data['form']['fromwhere']) . "</th>
+        </tr>
+        </table>
+        </body>
+        </html>
+        ";
+        
         $res = \ExHelper\Email::sendEmail(
-            'royli.lihuanan@gmail.com',
-            $data['form']['name'].'的测试文章', json_encode($data['form']));
+            'onepointmain123@gmail.com',
+            $data['form']['name'], $message);
         if ($res === true) {
             $this->sucess('0', 'ok', $res);
         }
