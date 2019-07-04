@@ -47,7 +47,7 @@ class Roommates extends \app\common\model\Roommates {
             $pageParam['query']["condition[{$key}]"] = $value;
         }
         // dd($condition['keyword']);
-        $c['r.title|r.price|r.sex|r.pet|r.smoke|r.lease_term|r.habit|r.city|r.content|r.school|r.area'] = ['like', "%{$keyword}%"];
+        $c['r.dsn|r.title|r.price|r.sex|r.pet|r.smoke|r.lease_term|r.habit|r.city|r.content|r.school|r.area'] = ['like', "%{$keyword}%"];
         $count = $this->alias('r')
             // ->whereOr('h.title', 'like', "%{$keyword}%")
             // ->whereOr('h.content', 'like', "%{$keyword}%")

@@ -87,7 +87,7 @@ class Houses extends Model {
             $old_thumbnail = '';
         }
 
-        // 移动缩略图
+        // 移动标题图
         if ($data['thumnail']) { // 确保从tmp中移动出thumnail
             // 如果之前上传过缩略图，删除
             if ($old_thumbnail && $data['thumnail'] != $old_thumbnail) {
@@ -97,10 +97,12 @@ class Houses extends Model {
                 return array('code' => -1, 'msg' => '移动缩略图位置失败');
             }
         }
+
         $data['cdate'] = $now;
         $data['mdate'] = $now;
         // Generate DSN for current situtation
-        $data['dsn'] = $this->gen_house_dsn($data['source'], $data['city']);
+        //$data['dsn'] = $this->gen_house_dsn($data['source'], $data['city']);
+        $data['dsn'] = $this->gen_house_dsn_new();
         // 保存数据
         if ($data['id']) {
             $lines = $this->save($data, array('id' => $data['id']));
@@ -146,7 +148,8 @@ class Houses extends Model {
 			// }
 			$data['cdate'] = $now;
             //添加房源编号new
-            $data['dsn'] = $this->gen_house_dsn($data['source'], $data['city']);
+//            $data['dsn'] = $this->gen_house_dsn($data['source'], $data['city']);
+            $data['dsn'] = $this->gen_house_dsn_new();
             $this->data = $data;
 
 			//访问频繁
@@ -260,5 +263,19 @@ class Houses extends Model {
             return false;
         }
         return $dest_path;
+    }
+    //重新生成找室友编码
+    private function gen_house_dsn_new()
+    {
+        // 找室友编号开始为B
+        $dsn = 'A';
+        $count = $this->count();
+        $s = '';
+        for ($i = 1; $i < 10 - strlen($count); $i++) {
+            $s .= '0';
+        }
+        $count++;
+        $dsn .= $s.$count;
+        return $dsn;
     }
 }

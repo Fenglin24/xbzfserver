@@ -117,4 +117,6 @@ class Api extends \think\Controller {
 		$id = input('param.id');
 		model('Houses')->saveHousesData(['id' => $id]);
 	}
+    
+
 }

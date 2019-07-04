@@ -17,6 +17,22 @@ $("#address").autocomplete({
 	}
 });
 
+$("#address").autocomplete({
+	source: addressAC,
+	minLength: 2,
+	select: function (event, ui) {
+		console.log("Selected: " + ui.item.value + " with LocationId " + ui.item.id);
+		locationAD(ui.item.value)
+		var area = ui.item.value.split(',')[1].trim()
+		if(area == "Melbourne"){
+			$('#area').val("Melbourne CBD");
+		}else{
+			$('#area').val(area);
+		}
+
+	}
+});
+
 // autocomplete using Address autocomplete
 // jquery autocomplete needs 2 fields: title and value
 // id holds the LocationId which can be used at a later stage to get the coordinate of the selected choice
@@ -126,18 +142,18 @@ var editObj = {
 			var data = {
 				// 房源id
 				'id': $('#id').val(),
+				'user_id': $('#user_id').val(),
 				'title': $('#title').val(),
 				'http': $('#http').val(),
 				'price': $('#price').val(),
 				'address': $('#address').val(),
 				'city': $('#city').val(),
+				'validity': $('#validity').val(),
 				'source': $("input[name='source']:checked").val(),
 				'type': $("input[name='type']:checked").val(),
 				'sex': $("input[name='sex']:checked").val(),
 				'pet': $("input[name='pet']:checked").val(),
-				'smoke': $("input[name='smoke']:checked").val(),
 				'bill': $("input[name='bill']:checked").val(),
-				'deposit': $('#deposit').val(),
 				'live_date': $('#live_date').val(),
 				'lease_term': $("input[name='lease_term']:checked").val(),
 				'house_type': $("input[name='house_type']:checked").val(),
@@ -177,6 +193,15 @@ var editObj = {
 				});
 				return false;
 			}
+			if(data.user_id == "") {
+				pop.alert("请选择一个用户，若无您的用户，请联系管理员修改", function() {
+					$("#title").focus();
+					$('html,body').animate({
+						scrollTop: 0
+					}, 500);
+				});
+				return false;
+			}
 			if(data.address == ""){
 				pop.alert("请填写地址", function() {
 					$("#address").focus();
@@ -204,15 +229,7 @@ var editObj = {
 				});
 				return false;
 			}
-			if(data.deposit == ""){
-				pop.alert("请填写押金", function() {
-					$("#deposit").focus();
-					$('html,body').animate({
-						scrollTop: 0
-					}, 500);
-				});
-				return false;
-			}
+
 			if(data.school == ""){
 				pop.alert("请填写校区", function() {
 					$("#school").focus();
@@ -294,6 +311,7 @@ var editObj = {
 				processData: false,
 				contentType: false,
 				success: function(res) {
+					console.log(res);
 					if (res.code == 0) {
 						self.setThumbnailImg(dom, res.data.url, res.data.selector);
 					} else {

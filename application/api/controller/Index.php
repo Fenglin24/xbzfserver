@@ -2,7 +2,41 @@
 namespace app\api\controller;
 
 class Index extends \think\Controller {
+  
+     public function get_share_new() {
+		// header("content-type","image/jpeg");
+		$id = input('param.id');
+		$access_token = $this->get_access_token();
+		$url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" . $access_token;
+		$type = input('param.type');
+		if ($type == "roommate") {
+            $data['scene'] = 'r' . $id;
+            $data['path'] = 'pages/roommateDetail/roommateDetail';
+        }
+		else{
+            $data['scene'] = 'h' . $id;
+            $data['path'] = 'pages/detail/detail';
+        }
+//        $data['scene'] = $id;
 
+		$data['width'] = '430';
+		$res = $this->http($url, json_encode($data),1);
+		// var_dump($res);exit;
+        if ($type == "roommate") {
+            $path = 'uploads/qrcode/r' . $id . '.jpg';
+        }else{
+            $path = 'uploads/qrcode/h' . $id . '.jpg';
+        }
+		file_put_contents($path, $res);
+		
+	    $return['status_code'] = 2000;
+	    $return['msg'] = 'ok';
+	    $return['data'] = config('appurl').'/' . $path;
+	    // dd($id);
+	    // echo '<img src="'.$path.'" />';exit;
+	    echo json_encode($return);exit;
+	}
+    
 	public function get_share() {
 		// header("content-type","image/jpeg");
 		$id = input('param.id');
@@ -517,4 +551,18 @@ class Index extends \think\Controller {
 		}
 		return $list;
 	}
+    
+    //调取中介数据
+    public function get_agency_list() {
+        $list = model('Agency')->where('status','1')->select();
+        $list = $this->init_html_list_content($list);
+        $this->sucess('0', 'ok', $list);
+    }
+  
+      //调取学生公寓数据
+      public function get_apartment_list() {
+        $list = model('Apartment')->where('status','1')->select();
+        $list = $this->init_html_list_content($list);
+        $this->sucess('0', 'ok', $list);
+    }
 }

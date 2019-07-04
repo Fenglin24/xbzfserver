@@ -58,6 +58,7 @@ class User extends Model {
 		if (!isset($data['id'])) {
 			
 			$data['cdate'] = $now;
+            $data['email'] = "";
 			$this->data = $data;
 			$result = $this->save();
 			if (false === $result) {

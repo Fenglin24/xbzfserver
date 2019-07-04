@@ -228,9 +228,9 @@ class Houses extends BaseController {
 //		if (!@$data['smoke']) {
 //			$this->sucess('-1', '吸烟不能为空');
 //		}
-		if (!@$data['bill']) {
-			$this->sucess('-1', 'Bill相关不能为空');
-		}
+//		if (!@$data['bill']) {
+//			$this->sucess('-1', 'Bill相关不能为空');
+//		}
 //		if (!@$data['deposit']) {
 //			$this->sucess('-1', '押金不能为空');
 //		}
@@ -445,6 +445,19 @@ class Houses extends BaseController {
         $tmp[] = 'and';
         return $tmp;
     }
-	
+  
+    // charlie 02/07/2019
+    public function auto_update_status(){
+
+        $list = model('Houses')->where('status','1')->select();
+        foreach($list as $row){
+            $datediff = date_diff($row['cdate'],date('Y-m-d'));
+            //if $row[stat]
+            echo $datediff." || ";
+        }
+        print_r($row['status']);
+
+    }
+
 
 }

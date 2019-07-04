@@ -3,7 +3,7 @@
 	<form class="form" role="form" onsubmit="return false">
 	<div class="row">
 		<div class="col-xs-12 form-group">
-			<label class="control-label no-padding-left" for="title"> 房源标题 </label>
+			<label class="control-label no-padding-left" for="title"> 房源标题 (<font color="red">*</font>) </label>
 			<input type="text" id="title" placeholder="标题" class="form-control" value="{$house.title|default=''}" />
 		</div>
 		<div class="col-xs-12 form-group">
@@ -14,25 +14,58 @@
 			</small>
 		</div>
 		<div class="col-xs-12 form-group">
-			<label class="control-label no-padding-left" for="price"> 租金（A$）</label>
+			<label class="control-label no-padding-left" for="price"> 租金（A$）(<font color="red">*</font>)</label>
 			<input type="text" id="price" placeholder="请输入租金" class="form-control" value="{$house.price|default=''}" />
 		</div>
 		<div class="col-xs-6 form-group">
-			<label class="control-label no-padding-left" for="address"> 地址：</label>
+			<label class="control-label no-padding-left" for="address"> 地址：(<font color="red">*</font>)</label>
 			<input type="text" id="address" placeholder="请输入地址" class="form-control" value="{$house.address|default=''}" />
 		</div>
 		<div class="col-xs-6 form-group">
-			<label class="control-label no-padding-left" for="city"> 城市：</label>
+			<label class="control-label no-padding-left" for="city"> 城市：(<font color="red">*</font>)</label>
 			<select class="form-control" id='city' name="city">
 
 			</select>
+		</div>
+
+		<div class="col-xs-12 form-group">
+			<label class="control-label no-padding-left" for="user_id"> 您是哪位发房员？(<font color="red">*</font>)(<font color="red">必须选择，否则无法在小程序修改你的房源</font>)</label>
+			<select class="form-control" id='user_id' name="user_id">
+				<option value="">请选择...</option>
+				<optgroup label="运营人员">
+					<option value="26">Snow</option>
+					<option value="25">Coral</option>
+					<option value="31">朱迪斯</option>
+					<option value="21">Daniel瑞轩</option>
+				</optgroup>
+				<optgroup label="墨尔本">
+					<option value="904">晓雪</option>
+					<option value="1128">惠子</option>
+					<option value="1129">羊不说</option>
+					<option value="1130">李贺文</option>
+				</optgroup>
+				<optgroup label="悉尼">
+					<option value="2885">雩风</option>
+					<option value="2442">乂铃</option>
+				</optgroup>
+			</select>
+		</div>
+		<div class="col-xs-12 form-group">
+			<label class="control-label no-padding-left" for="validity"> 房源有效期设置:</label>
+			<select class="form-control" id='validity' name="validity">
+				<option value="0">正常</option>
+				<option value="1">长期有效</option>
+			</select>
+		</div>
+		<div class="col-xs-12 form-group">
+			<!-- It is a placeholder for UI -->
 		</div>
 		<div class="col-xs-12 form-group" style="border-bottom: dashed 1px;">
 			<h3>租约相关</h3>
 		</div>
 
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 房屋来源</label>
+			<label class="control-label no-padding-left"> 房屋来源(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="source" id="source1" value="中介" {$house.source|default='' == '中介'?'checked':''}>
 				<label class="form-check-label" for="source1">
@@ -54,7 +87,7 @@
 
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 出租方式</label>
+			<label class="control-label no-padding-left"> 出租方式(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="type" id="type1" value="整租" {$house.type|default='' == '整租'?'checked':''}>
 				<label class="form-check-label" for="type1">
@@ -75,7 +108,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 性别限制</label>
+			<label class="control-label no-padding-left"> 性别限制(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="sex" id="sex1" value="男女不限" {$house.sex|default='' == '男女不限'?'checked':''}>
 				<label class="form-check-label" for="sex1">
@@ -96,7 +129,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 宠物</label>
+			<label class="control-label no-padding-left"> 宠物(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="pet" id="pet1" value="接受" {$house.pet|default='' == '接受'?'checked':''}>
 				<label class="form-check-label" for="pet1">
@@ -110,46 +143,41 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 吸烟</label>
-			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="smoke" id="smoke1" value="接受" {$house.smoke|default='' == '接受'?'checked':''}>
-				<label class="form-check-label" for="smoke1">
-					接受
-				</label>
-			</div>
-			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="smoke" id="smoke2" value="不接受" {$house.smoke|default='' == '不接受'?'checked':''}>
-				<label class="form-check-label" for="smoke2">
-					不接受
-				</label>
-			</div>
-		</div>
+
 		<div class="col-xs-4 form-group">
 			<label class="control-label no-padding-left"> Bill相关</label>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="bill" id="bill1" value="包bill" {$house.bill|default='' == '包bill'?'checked':''}>
+				<input class="form-check-input" type="checkbox" name="bill" id="bill1" value="包水" {$house.bill|default='' == '包水'?'checked':''}>
 				<label class="form-check-label" for="bill1">
-					包bill
+					包水
 				</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="bill" id="bill2" value="不包bill" {$house.bill|default='' == '不包bill'?'checked':''}>
+				<input class="form-check-input" type="checkbox" name="bill" id="bill2" value="包电" {$house.bill|default='' == '包电'?'checked':''}>
 				<label class="form-check-label" for="bill2">
-					不包bill
+					包电
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="bill" id="bill3" value="包煤气" {$house.bill|default='' == '包煤气'?'checked':''}>
+				<label class="form-check-label" for="bill1">
+					包煤气
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="checkbox" name="bill" id="bill4" value="包网" {$house.bill|default='' == '包网'?'checked':''}>
+				<label class="form-check-label" for="bill1">
+					包网
 				</label>
 			</div>
 		</div>
+
 		<div class="col-xs-12 form-group">
-			<label class="control-label no-padding-left" for="deposit"> 押金</label>
-			<input type="text" id="deposit" placeholder="请输入押金" class="form-control" value="{$house.deposit|default=''}" />
-		</div>
-		<div class="col-xs-12 form-group">
-			<label class="control-label no-padding-left" for="live_date"> 入住时间</label>
+			<label class="control-label no-padding-left" for="live_date"> 入住时间(<font color="red">*</font>)</label>
 			<input type="text" id="live_date" placeholder="yyyy-mm-dd" class="form-control" value="{$house.live_date|default=''}" />
 		</div>
 		<div class="col-xs-6 form-group">
-			<label class="control-label no-padding-left" for="lease_term"> 租期</label>
+			<label class="control-label no-padding-left"> 租期(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="lease_term" id="lease_term1" value="少于3个月" {$house.lease_term|default='' == '少于3个月'?'checked':''}>
 				<label class="form-check-label" for="lease_term1">
@@ -179,7 +207,7 @@
 			<h3>房屋相关</h3>
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 房屋类型</label>
+			<label class="control-label no-padding-left"> 房屋类型(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="house_type" id="house_type1" value="公寓" {$house.house_type|default='' == '公寓'?'checked':''}>
 				<label class="form-check-label" for="house_type1">
@@ -200,7 +228,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 户型</label>
+			<label class="control-label no-padding-left"> 户型(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="house_room" id="house_room1" value="一室" {$house.house_room|default='' == '一室'?'checked':''}>
 				<label class="form-check-label" for="house_room1">
@@ -227,7 +255,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 form-group">
-			<label class="control-label no-padding-left"> 卫生间</label>
+			<label class="control-label no-padding-left"> 卫生间(<font color="red">*</font>)</label>
 			<div class="form-check">
 				<input class="form-check-input" type="radio" name="toilet" id="toilet1" value="1个" {$house.toilet|default='' == '1个'?'checked':''}>
 				<label class="form-check-label" for="toilet1">
@@ -254,7 +282,7 @@
 			</div>
 		</div>
 		<div class="col-xs-3 form-group">
-			<label class="control-label no-padding-left"> 家具</label>
+			<label class="control-label no-padding-left"> 家具(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="furniture" id="furniture1" value="包家具" {$house.furniture|default='' == '包家具'?'checked':''}>
 				<label class="form-check-label" for="furniture1">
@@ -270,7 +298,7 @@
 		</div>
 
 		<div class="col-xs-3 form-group">
-			<label class="control-label no-padding-left"> 车位</label>
+			<label class="control-label no-padding-left"> 车位(<font color="red">*</font>)</label>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="radio" name="car" id="car1" value="0个" {$house.car|default='' == '0个'?'checked':''}>
 				<label class="form-check-label" for="car1">
@@ -320,20 +348,26 @@
 		<div class="col-xs-3 form-group">
 			<label class="control-label no-padding-left" for="title"> 交通</label>
 			<div class="form-check">
-				<input name="sation" id="sation1" type="checkbox" value="火车站">
+				<input name="sation" id="sation1" type="checkbox" value="巴士站">
 				<label class="form-check-label" for="sation1">
+					巴士站
+				</label>
+			</div>
+			<div class="form-check">
+				<input name="sation" id="sation2" type="checkbox" value="火车站">
+				<label class="form-check-label" for="sation2">
 					火车站
 				</label>
 			</div>
 			<div class="form-check">
-				<input name="sation" id="sation2" type="checkbox" value="电车站">
-				<label class="form-check-label" for="sation2">
+				<input name="sation" id="sation3" type="checkbox" value="电车站">
+				<label class="form-check-label" for="sation3">
 					电车站
 				</label>
 			</div>
 			<div class="form-check">
-				<input name="sation" id="sation3" type="checkbox" value="免费电车">
-				<label class="form-check-label" for="sation3">
+				<input name="sation" id="sation4" type="checkbox" value="免费电车">
+				<label class="form-check-label" for="sation4">
 					免费电车
 				</label>
 			</div>
@@ -345,12 +379,9 @@
 			<label class="control-label no-padding-left" for="title"> 区域</label>
 			<input type="text" id="area" placeholder="根据地址自动填充" class="form-control" value="{$house.area|default=''}" disabled />
 		</div>
-<!--		<div class="col-xs-6 form-group">-->
-<!--			<label class="control-label no-padding-left" for="title"> 校区</label>-->
-<!--&lt;!&ndash;			<input type="text" id="school" placeholder="请输入地址" class="form-control" value="{$house.school|default=''}" />&ndash;&gt;-->
-<!--		</div>-->
+
 		<div class="col-xs-6 form-group">
-			<label class="control-label no-padding-left" for="school"> 校区</label>
+			<label class="control-label no-padding-left" for="school"> 校区(<font color="red">*</font>)</label>
 			<select class="form-control" id="school" name="school">
 
 			</select>
@@ -359,7 +390,7 @@
 			<h3>联系方式</h3>
 		</div>
 		<div class="col-xs-6 form-group">
-			<label class="control-label no-padding-left" for="real_name"> 姓名</label>
+			<label class="control-label no-padding-left" for="real_name"> 姓名(<font color="red">*</font>)</label>
 			<input type="text" id="real_name" placeholder="请输入姓名" class="form-control" value="{$house.real_name|default=''}" />
 		</div>
 
@@ -379,7 +410,7 @@
 
 	<div class="row">
 		<div class="col-xs-12 form-group" style="border-bottom: dashed 1px;">
-			<h3>上传封面图</h3>
+			<h3>上传封面图(<font color="red">*</font>)</h3>
 		</div>
 		<div class="col-xs-12 form-group">
 		<style>

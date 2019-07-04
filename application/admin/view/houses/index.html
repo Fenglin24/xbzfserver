@@ -1,17 +1,10 @@
 {include file="../application/admin/view/header.html"}
 <div class="searchContent">
     <div class="col-xs-3">
-        {if condition="check_auth($role_id, $userAuthMap, '/admin/houses/save')"}
         <a class="btn btn-primary btn-noborder" href="/?s=admin/houses/edit">
             <i class="glyphicon glyphicon-plus"></i>
             添加
         </a>
-        {else /}
-        <button class="btn btn-primary btn-noborder" disabled>
-            <i class="glyphicon glyphicon-plus"></i>
-            添加
-        </button>
-        {/if}
         <button class="btn btn-sm in">
             全选
         </button>

@@ -47,7 +47,7 @@ class Houses extends \app\common\model\Houses {
 			$pageParam['query']["condition[{$key}]"] = $value;
 		}
 		// dd($condition['keyword']);
-		$c['h.title|h.address|h.price|h.source|h.type|h.sex|h.pet|h.smoke|h.bill|h.deposit|h.lease_term|h.house_type|h.furniture|h.car|h.toilet|h.home|h.sation|h.city|h.content|h.school|h.area'] = ['like', "%{$keyword}%"];
+		$c['h.dsn|h.title|h.address|h.price|h.source|h.type|h.sex|h.pet|h.smoke|h.bill|h.deposit|h.lease_term|h.house_type|h.furniture|h.car|h.toilet|h.home|h.sation|h.city|h.content|h.school|h.area'] = ['like', "%{$keyword}%"];
 		$count = $this->alias('h')
 				// ->whereOr('h.title', 'like', "%{$keyword}%")
 				// ->whereOr('h.content', 'like', "%{$keyword}%")
